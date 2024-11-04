@@ -127,13 +127,15 @@ button {
 <script>
 // Open the modal and set the win_id in the form
 function openModal(winId) {
-    $('#win_id').val(winId);  // Set win_id in modal form
-    $('#addressModal').show(); // Show modal
-  }
+    document.getElementById("addressModal").style.display = "block";
+    document.getElementById("win_id").value = winId;
+}
 
-  function closeModal() {
-    $('#addressModal').hide(); // Hide modal
-  }
+// Close the modal
+function closeModal() {
+    document.getElementById("addressModal").style.display = "none";
+}
+
 
 // Close the modal if user clicks outside of it
 window.onclick = function(event) {
@@ -160,9 +162,7 @@ window.onclick = function(event) {
 	}
 	var csrfToken = getToken('csrftoken');
 	
-	document.getElementById('make_payment').addEventListener('click', function (e) {
-		makePayment()
-	})
+	
 
 
 	function generateTxRef() {

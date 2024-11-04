@@ -2,13 +2,13 @@
  Design of a proper functional eBay-like e-commerce auction site that will allow users to post auction listings, place bids on listings, comment on those listings, and add listings to a “watchlist”.
  
  <h2>Django Admin Credentials:</h2>
- <li>UserID : "joel__jaimon"</li>
- <li>Password : "12345678rr"</li>
+ <li>UserID : "sam"</li>
+ <li>Password : "oke"</li>
 
 <h2>Homepage</h2>
-<img src="/dem_img/1.PNG">
+<img src="/a1.PNG">
 <h2>List Page</h2>
-<img src = "/dem_img/2.PNG">
+<img src = "/a2.PNG">
   
 <h2>Specifications:</h2>
  
