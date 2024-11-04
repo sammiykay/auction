@@ -6,9 +6,9 @@
  <li>Password : "oke"</li>
 
 <h2>Homepage</h2>
-<img src="/a1.PNG">
+<img src="/a1.png">
 <h2>List Page</h2>
-<img src = "/a2.PNG">
+<img src = "/a2.png">
   
 <h2>Specifications:</h2>
  
