@@ -1,0 +1,177 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{% block title %}Auctions{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
+</head>
+<style>
+    #mobile-menu { display: none; }
+</style>
+<body>
+    <nav class="bg-gray-800">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <img class="h-8 w-auto"
+                            src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
+                            alt="Your Company">
+                    </div>
+                    <div class="hidden sm:ml-6 sm:block">
+                        <div class="flex space-x-4">
+                            {% if request.user.is_authenticated %}
+                            <a href="{% url 'index' %}"
+                                class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white">Active
+                                Listing</a>
+                            <a href="{% url 'cat_list' %}"
+                                class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Categories</a>
+                            <a href="{% url 'watchlistpage' user.username %}""
+                                class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Waitlist</a>
+                                <a href="{% url 'create' %}"
+                                    class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Create Listing</a>
+                            <a href="{% url 'winnings' %}"
+                                class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">My winnings</a>
+                            {% else %}
+                            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+                            <a href="{% url 'index' %}"
+                                class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white">Active
+                                Listing</a>
+                            <a href="{% url 'cat_list' %}"
+                                class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Categories</a>
+                            
+                            {% endif %}
+                            </div>
+                    </div>
+                </div>
+                <div class="hidden sm:ml-6 sm:block">
+                    <div class="flex items-center">
+                        <!-- Profile dropdown -->
+                        <div class="relative ml-3">
+
+                            <div>
+                                {% if request.user.is_authenticated %}
+                                <a href="{% url 'logout' %}"
+                                    class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Logout</a>
+                                {% else %}
+                                <a href="{% url 'login' %}"
+                                    class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Login</a>
+                                <a href="{% url 'register' %}"
+                                    class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Register</a>
+                                {% endif %}
+                            </div>
+
+                            <!--
+                        Dropdown menu, show/hide based on menu state.
+          
+                        Entering: "transition ease-out duration-100"
+                          From: "transform opacity-0 scale-95"
+                          To: "transform opacity-100 scale-100"
+                        Leaving: "transition ease-in duration-75"
+                          From: "transform opacity-100 scale-100"
+                          To: "transform opacity-0 scale-95"
+                      -->
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="-mr-2 flex sm:hidden">
+                    <!-- Mobile menu button -->
+                    <button type="button"
+                        class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                        aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="absolute -inset-0.5"></span>
+                        <span class="sr-only">Open main menu</span>
+                        <!--
+                      Icon when menu is closed.
+          
+                      Menu open: "hidden", Menu closed: "block"
+                    -->
+                        <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" aria-hidden="true" data-slot="icon">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        </svg>
+                        <!--
+                      Icon when menu is open.
+          
+                      Menu open: "block", Menu closed: "hidden"
+                    -->
+                        <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" aria-hidden="true" data-slot="icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu, show/hide based on menu state. -->
+        <div class="sm:hidden" id="mobile-menu">
+            <div class="space-y-1 px-2 pb-3 pt-2">
+                <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'index' %}"
+                    class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white">Active Listing</a>
+                <a href="{% url 'cat_list' %}"
+                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Categories</a>
+                <a href="{% url 'watchlistpage' user.username %}"
+                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Waitlist</a>
+                <a href="{% url 'create' %}"
+                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Create Listing</a>
+                <a href="{% url 'winnings' %}"
+                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">My Winnings</a>
+                {% else %}
+                <a href="{% url 'index' %}"
+                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Active Listing</a>
+                <a href="{% url 'cat_list' %}"
+                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Categories</a>
+                    {% endif %}
+            </div>
+            <div class="border-t border-gray-700 pb-3 pt-4">
+                <div class="mt-3 space-y-1 px-2">
+                    {% if request.user.is_authenticated %}
+                    <a href="{% url 'logout' %}"
+                        class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Logout</a>
+                    {% else %}
+                    <a href="{% url 'login' %}"
+                        class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Login</a>
+                    <a href="{% url 'register' %}"
+                        class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Register</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    {% block body %}
+    {% endblock %}
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const menuButton = document.querySelector("[aria-controls='mobile-menu']");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const openIcon = menuButton.querySelector("svg:first-of-type");
+        const closeIcon = menuButton.querySelector("svg:last-of-type");
+
+        menuButton.addEventListener("click", function () {
+            // Toggle mobile menu visibility
+            if (mobileMenu.style.display === "block") {
+                mobileMenu.style.display = "none";
+                openIcon.classList.remove("hidden");
+                closeIcon.classList.add("hidden");
+            } else {
+                mobileMenu.style.display = "block";
+                openIcon.classList.add("hidden");
+                closeIcon.classList.remove("hidden");
+            }
+        });
+    });
+
+</script>
+</html>

@@ -1,0 +1,44 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<div class="w-5/6 mx-auto my-6">
+    {% if request.user.is_authenticated %}
+    <h2 class="text-xl font-bold">Currently Logged in: {{request.user.username}}</h2>
+    {% else %}
+    <h2 class="text-xl font-bold">Not Logged in</h2>
+    {% endif %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="w-5/6 mx-auto bg-green-500 text-white w-full text-center py-3 rounded-md">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-3">
+        {% for list in a1 %}
+        <div class="card">
+            {% if list.image_url %}
+            <img src="{{ list.image_url }}" class="w-full" style="height: 250px;">
+            {% else %}
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/1024px-No_image_3x4.svg.png"
+            alt="No image Provided" class="w-full" style="height: 250px;">
+            {% endif %}
+            <div class="mx-auto mb-4" style="width: 90%; display: flex; justify-content: space-between; flex-direction: column;">
+                <div class="mt-4">
+                    <a class="title text-lg font-bold">{{list.title}}</a><br>
+                    <a class="cat">Category: <span class="text-gray-500">{{list.category}}</span></a>
+                </div>
+                <div>
+                    <p class="desc mt-3">{{ list.desc }}</p>
+                    <a><a class="c_price">Starting Bid: </a> &#8358;{{ list.starting_bid }} </a>
+                </div>
+                <div class="mt-4">
+                <a href="{% url 'listingpage' list.id %}" class="bg-blue-600 rounded-md py-2 px-4 text-white">View Bid</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+</div>
+
+{% endblock %}
