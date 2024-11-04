@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import *
 
 class auction(admin.ModelAdmin):
-    list_display = ("id" , "user", "active_bool","title" , "desc" , "starting_bid" , "image_url" , "category")
+    list_display = ("id" , "user", "active_bool","title" , "desc" , "starting_bid" , "image" , "category")
 
 class watchl(admin.ModelAdmin):
     list_display = ("id", "watch_list" , "user")

@@ -8,8 +8,8 @@
     <div class = "card">
         <a class="title">{{list.watch_list.title}}</a>
         <a class= "cat">{{list.watch_list.category}}</a>
-        {% if list.watch_list.image_url %}
-            <img src="{{ list.watch_list.image_url }}" class="list_img">
+        {% if list.watch_list.imageURL %}
+            <img src="{{ list.watch_list.imageURL }}" class="list_img">
         {% else %}
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/1024px-No_image_3x4.svg.png" alt="No image Provided" class="list_img">
         {% endif %}

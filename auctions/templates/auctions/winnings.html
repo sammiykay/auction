@@ -6,8 +6,8 @@
     {% for list in user_winlist %}
     <div class="card">
         <input type="hidden" name="win_id" id="win_id_{{ list.id }}" value="{{ list.id }}">
-        {% if list.bid_win_list.image_url %}
-            <img src="{{ list.bid_win_list.image_url }}" class="list_img">
+        {% if list.bid_win_list.imageURL %}
+            <img src="{{ list.bid_win_list.imageURL }}" class="list_img">
         {% else %}
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/1024px-No_image_3x4.svg.png" alt="No image Provided" class="list_img">
         {% endif %}
@@ -22,7 +22,7 @@
             {% if list.paid %}
                 <button disabled>Paid</button>
             {% else %}
-                <button class="bg-blue-600 text-white rounded-sm mt-3" onclick="openModal('{{ list.id }}')">Pay Now</button>
+                <button class="bg-blue-600 text-white rounded-sm mt-3" onclick="openModal('{{ list.id }}', '{{ list.price }}')" data-price="{{ list.price }}">Pay Now</button>
             {% endif %}
         </div>
     </div>
@@ -32,11 +32,13 @@
 <!-- Modal Structure -->
 <div id="addressModal" class="modal">
     <div class="modal-content">
+
         <span class="close" onclick="closeModal()">&times;</span>
         <div class="my-4">
             <form id="paymentForm">
                 {% csrf_token %}
                 <input type="hidden" id="win_id" name="win_id">
+                <input type="hidden" id="price" class="price" name="price">
                 <label for="address">Enter Your Address:</label>
                 <input type="text" class="w-full border border-1 border-black px-2 py-1 rounded-sm" name="address" id="address" required>
                 <button type="button" class="bg-blue-600 w-full py-2 text-center text-white rounded-sm mt-3" id="make_payment">Submit Payment</button>
@@ -126,9 +128,11 @@ button {
 
 <script>
 // Open the modal and set the win_id in the form
-function openModal(winId) {
+function openModal(winId, price) {
     document.getElementById("addressModal").style.display = "block";
     document.getElementById("win_id").value = winId;
+    $('.price').val(price);
+
 }
 
 // Close the modal
@@ -182,12 +186,12 @@ window.onclick = function(event) {
 	$(document).ready(function() {
     $('#make_payment').click(function(event) {
       event.preventDefault();
-      
+      const price = $('.price').val();
       
       FlutterwaveCheckout({
 			public_key: "FLWPUBK_TEST-492ac3f598f3ec407a39f0fad8325a83-X",
 			tx_ref: generateTxRef(),
-			amount: "{{list.price}}",
+			amount: price,
 			currency: "NGN",
 			payment_options: "card, banktransfer, ussd",
 			meta: {

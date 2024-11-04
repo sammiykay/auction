@@ -15,8 +15,9 @@
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-3">
         {% for list in a1 %}
         <div class="card">
-            {% if list.image_url %}
-            <img src="{{ list.image_url }}" class="w-full" style="height: 250px;">
+            {% if list.imageURL %}
+            
+            <img src="{{ list.imageURL }}" class="w-full" style="height: 250px;">
             {% else %}
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/1024px-No_image_3x4.svg.png"
             alt="No image Provided" class="w-full" style="height: 250px;">

@@ -9,9 +9,19 @@ class auctionlist(models.Model):
     title = models.CharField(max_length=64)
     desc = models.TextField()           #CharField cannot be left without giving a max_length, Textfield can
     starting_bid = models.IntegerField()        
-    image_url = models.CharField(max_length=228, default = None, blank = True, null = True)
+    image = models.ImageField(default=False)
     category = models.CharField(max_length=64)
     active_bool = models.BooleanField(default = True)
+
+    def imageURL(self):
+        try:
+            url = self.image.url
+
+        except:
+            url = ''
+        
+        return url
+
 
 class bids(models.Model):
     user = models.CharField(max_length=30)
