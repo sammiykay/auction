@@ -7,7 +7,7 @@
 <div>{{ message }}</div>
 {% endif %}
 
-<form action="{% url 'login' %}" class="shadow-lg p-5 mx-auto my-20" style="width: 600px;" method="post">
+<form action="{% url 'login' %}" class="shadow-lg p-5 mx-auto my-20 w-full lg:w-4/6" method="post">
     {% csrf_token %}
     <h2 class="text-center text-xl mb-4 font-bold">Login</h2>
 

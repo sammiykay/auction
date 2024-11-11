@@ -77,7 +77,7 @@ def create(request):
         m.title = request.POST["create_title"]
         m.desc = request.POST["create_desc"]
         m.starting_bid = request.POST["create_initial_bid"]
-        m.image_url = request.POST["img_url"]
+        m.image = request.FILES["img_url"]
         m.category = request.POST["category"]
         # m = auctionlist(title = title, desc=desc, starting_bid = starting_bid, image_url = image_url, category = category)
         m.save()

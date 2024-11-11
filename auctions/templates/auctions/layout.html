@@ -4,6 +4,7 @@
 <html lang="en">
 <head>
     <title>{% block title %}Auctions{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
@@ -11,6 +12,29 @@
 </head>
 <style>
     #mobile-menu { display: none; }
+    /* Add styles for the hamburger icon */
+    .hamburger {
+        display: block;
+        cursor: pointer;
+    }
+
+    .hamburger div {
+        width: 30px;
+        height: 4px;
+        margin: 6px 0;
+        background-color: white;
+        transition: all 0.3s;
+    }
+
+    @media (min-width: 640px) {
+        #mobile-menu {
+            display: none;
+        }
+
+        .hamburger {
+            display: none;
+        }
+    }
 </style>
 <body>
     <nav class="bg-gray-800">
@@ -44,6 +68,14 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Hamburger Menu Icon for Mobile -->
+                <div class="hamburger sm:hidden" aria-controls="mobile-menu" aria-expanded="false">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+
                 <div class="hidden sm:ml-6 sm:block">
                     <div class="flex items-center">
                         <!-- Profile dropdown -->
@@ -66,30 +98,45 @@
         </div>
     </nav>
 
+    <div id="mobile-menu" class="sm:hidden">
+        <div class="px-2 pt-2 pb-3 space-y-1">
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'index' %}"
+                   class="block rounded-md px-3 py-2 text-base font-medium {% if request.path == 'index' %}bg-gray-900 text-white{% else %}text-gray-300 hover:bg-gray-700 hover:text-white{% endif %}">Active Listing</a>
+                <a href="{% url 'cat_list' %}"
+                   class="block rounded-md px-3 py-2 text-base font-medium {% if request.path == 'cat_list' %}bg-gray-900 text-white{% else %}text-gray-300 hover:bg-gray-700 hover:text-white{% endif %}">Categories</a>
+                <a href="{% url 'watchlistpage' user.username %}"
+                   class="block rounded-md px-3 py-2 text-base font-medium {% if request.path == 'watchlistpage' %}bg-gray-900 text-white{% else %}text-gray-300 hover:bg-gray-700 hover:text-white{% endif %}">Waitlist</a>
+                <a href="{% url 'create' %}"
+                   class="block rounded-md px-3 py-2 text-base font-medium {% if request.path == 'create' %}bg-gray-900 text-white{% else %}text-gray-300 hover:bg-gray-700 hover:text-white{% endif %}">Create Listing</a>
+                <a href="{% url 'winnings' %}"
+                   class="block rounded-md px-3 py-2 text-base font-medium {% if request.path == 'winnings' %}bg-gray-900 text-white{% else %}text-gray-300 hover:bg-gray-700 hover:text-white{% endif %}">My Winnings</a>
+            {% else %}
+                <a href="{% url 'index' %}"
+                   class="block rounded-md px-3 py-2 text-base font-medium {% if request.path == 'index' %}bg-gray-900 text-white{% else %}text-gray-300 hover:bg-gray-700 hover:text-white{% endif %}">Active Listing</a>
+                <a href="{% url 'cat_list' %}"
+                   class="block rounded-md px-3 py-2 text-base font-medium {% if request.path == 'cat_list' %}bg-gray-900 text-white{% else %}text-gray-300 hover:bg-gray-700 hover:text-white{% endif %}">Categories</a>
+            {% endif %}
+        </div>
+    </div>
+
     {% block body %}
     {% endblock %}
 </body>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        const menuButton = document.querySelector("[aria-controls='mobile-menu']");
+        const menuButton = document.querySelector(".hamburger");
         const mobileMenu = document.getElementById("mobile-menu");
-        const openIcon = menuButton.querySelector("svg:first-of-type");
-        const closeIcon = menuButton.querySelector("svg:last-of-type");
 
         menuButton.addEventListener("click", function () {
             // Toggle mobile menu visibility
             if (mobileMenu.style.display === "block") {
                 mobileMenu.style.display = "none";
-                openIcon.classList.remove("hidden");
-                closeIcon.classList.add("hidden");
             } else {
                 mobileMenu.style.display = "block";
-                openIcon.classList.add("hidden");
-                closeIcon.classList.remove("hidden");
             }
         });
     });
-
 </script>
 </html>
