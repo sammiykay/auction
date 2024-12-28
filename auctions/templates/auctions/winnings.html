@@ -38,8 +38,9 @@
             <form id="paymentForm">
                 {% csrf_token %}
                 <input type="hidden" id="win_id" name="win_id">
-                <input type="hidden" id="price" class="price" name="price">
+                <input type="hidden" id="price" class="price" value="" name="price">
                 <label for="address">Enter Your Address:</label>
+                {{price}}
                 <input type="text" class="w-full border border-1 border-black px-2 py-1 rounded-sm" name="address" id="address" required>
                 <button type="button" class="bg-blue-600 w-full py-2 text-center text-white rounded-sm mt-3" id="make_payment">Submit Payment</button>
             </form>
@@ -131,7 +132,8 @@ button {
 function openModal(winId, price) {
     document.getElementById("addressModal").style.display = "block";
     document.getElementById("win_id").value = winId;
-    $('.price').val(price);
+    $('#price').val(price);
+    console.log(price) 
 
 }
 
@@ -186,7 +188,7 @@ window.onclick = function(event) {
 	$(document).ready(function() {
     $('#make_payment').click(function(event) {
       event.preventDefault();
-      const price = $('.price').val();
+      const price = $('#price').val();
       
       FlutterwaveCheckout({
 			public_key: "FLWPUBK_TEST-492ac3f598f3ec407a39f0fad8325a83-X",
